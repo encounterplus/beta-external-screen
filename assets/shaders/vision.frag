@@ -21,22 +21,18 @@ void main(void)
    
    vec4 finalColor = color * intensityColor;
 
-   if (radiusMin <= 0.0 || radiusMax <= 0.0) {
+   if (radiusMin <= 0.0 && radiusMax <= 0.0) {
       discard;
    }
 
    if (dist >= radiusMax) {
-      gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0);
-      // return;
-      // gl_FragColor = mix(intensityColor, color, intensity);
+      gl_FragColor = vec4(1.0 * intensity, 1.0, 0.0, intensity);
    } else {
-      float st = (dist - radiusMin) / (radiusMax - radiusMin);
+      float st = 1.0 - ((dist - radiusMin) / (radiusMax - radiusMin));
       if (st <= intensity) {
-         float alpha = 1.0 - st;
-         // premultiply
-         gl_FragColor = vec4(1.0 * alpha, 1.0 * alpha, 1.0 * alpha, alpha);
+         gl_FragColor = vec4(1.0 * intensity, 1.0, 0.0, intensity);
       } else {
-         gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0);
+         gl_FragColor = vec4(1.0 * st, 1.0, 0.0, st);
       }
    }
 }
